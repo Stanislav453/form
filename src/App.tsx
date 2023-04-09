@@ -1,9 +1,10 @@
 import React from "react";
+import { Global } from "./component/styled/Global";
 
 export const App = () => {
   return (
     <>
-      <h1>This is APP</h1>
+      <Global />
     </>
   );
 };
