@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { FormSlider } from "./FormSlider";
+import { SubmitText } from "./styled/SubmitText";
 import { FormStyle } from "./styled/FormStyle";
 import { FormRegistration } from "./styled/FormRegistration";
 import { FormSliderContainer } from "./styled/FormSliderContainer";
@@ -10,11 +11,11 @@ import { CheckBoxContainer } from "./styled/CheckBoxContainer";
 import { Container } from "./styled/Container";
 import { Select } from "./styled/Select";
 import { Button } from "./styled/Button";
-import { Section } from "./Section";
+import { Section } from "./styled/Section";
 
 export const Form = () => {
   //HOOKS
-  const [form, setform] = useState(false);
+  const [form, setForm] = useState(false);
 
   //FORM_TYPE
   type FormType = {
@@ -67,19 +68,35 @@ export const Form = () => {
         formik.values.confirmPassword &&
         formik.values.password
       ) {
-        setform(true);
+        setForm(true);
       }
     },
   });
 
-  console.log(true);
-
+  if (form) {
+    return (
+      <Section>
+        <FormStyle onSubmit={formik.handleSubmit}>
+          <FormRegistration>
+            <h1>Registration successful</h1>
+            <SubmitText>
+              Thank you, <span>{formik.values.name}</span> for registering. We
+              sand you email to you adress <span>{formik.values.email}</span>
+            </SubmitText>
+            <Button onClick={() => setForm(false)}>Registration</Button>
+          </FormRegistration>
+          <FormSliderContainer>
+            <FormSlider />
+          </FormSliderContainer>
+        </FormStyle>
+      </Section>
+    );
+  } else {
     return (
       <Section>
         <FormStyle onSubmit={formik.handleSubmit}>
           <FormRegistration>
             <h1>Registration</h1>
-            {/* totot */}
             <InputContainer
               error={formik.touched.name && formik.errors.name ? "error" : ""}
             >
@@ -209,4 +226,5 @@ export const Form = () => {
         </FormStyle>
       </Section>
     );
+  }
 };
