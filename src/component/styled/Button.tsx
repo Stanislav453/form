@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Button = styled.button`
   font-weight: 900;
-  font-size: 1.5em;
+  font-size: clamp(1em, 5vw, 1.5em);
 
   padding: 0.5em 1em;
   align-self: center;
