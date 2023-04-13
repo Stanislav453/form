@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { FormSlider } from "./FormSlider";
@@ -59,7 +59,10 @@ export const Form = () => {
       confirmPassword: Yup.string()
         .oneOf([Yup.ref("password"), "Password confirm"], "Password must match")
         .required("Password must match"),
-      checkInfo: Yup.boolean().required("Box must be checked"),
+      checkInfo: Yup.boolean().oneOf(
+        [true],
+        "Please accept the terms of service"
+      ),
     }),
     onSubmit: (values) => {
       if (
@@ -73,7 +76,7 @@ export const Form = () => {
     },
   });
 
-  if (form) {
+  if (false) {
     return (
       <Section>
         <FormStyle onSubmit={formik.handleSubmit}>
@@ -85,9 +88,6 @@ export const Form = () => {
             </SubmitText>
             <Button onClick={() => setForm(false)}>Registration</Button>
           </FormRegistration>
-          <FormSliderContainer>
-            <FormSlider />
-          </FormSliderContainer>
         </FormStyle>
       </Section>
     );
@@ -194,23 +194,22 @@ export const Form = () => {
                   type="checkbox"
                   name="checkInfo"
                   value="checked"
-                  // onChange={formik.handleChange}
-                  // onClick={formik.handleChange}
-                  // onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  onClick={formik.handleChange}
+                  onBlur={formik.handleBlur}
                 />
                 <label htmlFor="checkInfo">
-                  <p>
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Ex, quidem eius repellendus nisi quia fugiat aliquam.
-                  </p>
+                  <p>I agree to the processing of personal data.</p>
                 </label>
               </CheckBoxContainer>
+
               <CheckBoxContainer error={""}>
-                <input type="checkbox" name="check-email" />
+                <input type="checkbox" name="check-email" value="checked" />
                 <label htmlFor="check-email">
                   <p>
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Ex, quidem eius repellendus nisi quia fugiat aliquam.
+                    I agree to receive a questionnaire about customer
+                    satisfaction and information on products that are on
+                    promotion (recommended) via our website.
                   </p>
                 </label>
               </CheckBoxContainer>
