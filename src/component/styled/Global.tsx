@@ -11,6 +11,7 @@ export const Global = createGlobalStyle`
 
         font-family: Verdana, Geneva, Tahoma, sans-serif;
         font-size: 1em;
+        margin: 1em;
         color: #000;
           background-image: linear-gradient(
     to top,
