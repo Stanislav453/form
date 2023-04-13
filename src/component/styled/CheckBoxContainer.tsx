@@ -15,8 +15,8 @@ export const CheckBoxContainer = styled.div`
   padding: 0 3em;
 
   input[type="checkbox"] {
-    width: 1.9em;
-    height: 1.2em;
+    width: 15px;
+    height: 15px;
 
     display: grid;
     place-content: center;
@@ -38,8 +38,8 @@ export const CheckBoxContainer = styled.div`
 
     &:before {
       content: "";
-      width: 0.65em;
-      height: 0.65em;
+      width: 13px;
+      height: 13px;
 
       transform: scale(0);
       transform-origin: bottom left;
