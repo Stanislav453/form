@@ -9,6 +9,5 @@ export const DotContainer = styled.div`
   bottom: 25px;
 
   display: flex;
-  justify-content: center;
-  gap: .5em;
+  gap: 0.5em;
 `;

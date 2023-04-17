@@ -6,12 +6,8 @@ export const FormStyle = styled.form`
   height: auto;
 
   display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  margin: 0 1em;
 
-  
-  @media ( max-width: 50em ) {
+  @media (max-width: 50em) {
     flex-direction: column;
   }
 `;
