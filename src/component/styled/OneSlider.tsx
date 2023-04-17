@@ -11,6 +11,8 @@ export const OneSlider = styled.div`
   align-items: center;
   gap: 1em;
 
+  border-radius: 10px 0 0 10px;
+
   background-color: rgba(0, 0, 0, 0.4);
 
   h2,
@@ -20,6 +22,7 @@ export const OneSlider = styled.div`
     display: block;
 
     text-align: center;
+    padding: 0 1em;
 
     color: #fff;
   }
@@ -31,5 +34,9 @@ export const OneSlider = styled.div`
   p {
     font-size: clamp(1em, 10vw, 1.5em);
     line-height: 1.5em;
+  }
+
+  @media (max-width: 50em /* 800px */) {
+    border-radius: 0;
   }
 `;
