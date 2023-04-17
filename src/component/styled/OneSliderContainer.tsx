@@ -17,6 +17,12 @@ export const OneSliderContainer = styled.div`
     isActive === "active" ? "1" : "0"};
   transition: opacity 1s ease-in-out;
 
+  border-radius: 10px 0 0 10px;
+
   background-position: center center;
   background-image: url(${({ img }: OneSliderContainerProps) => img});
+
+  @media (max-width: 50em /* 800px */) {
+    border-radius: 0;
+  }
 `;
