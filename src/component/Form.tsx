@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { BiShow, BiHide } from "react-icons/bi";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { FormSlider } from "./FormSlider";
@@ -12,10 +13,25 @@ import { Container } from "./styled/Container";
 import { Select } from "./styled/Select";
 import { Button } from "./styled/Button";
 import { Section } from "./styled/Section";
+import { PasswordBar } from "./styled/PasswordBar";
 
 export const Form = () => {
   //HOOKS
   const [form, setForm] = useState(false);
+  const [passwordType, setPasswordType] = useState(true);
+
+  //VARIABLES_FOR_FORM_VALIDATION
+  const passwordLength = 20;
+  const passwordPower = 10;
+  const nameError = "Name must be 20 characters or less";
+  const nameRequired = "Name is required";
+  const emailError = "Invalid email address";
+  const emailRequired = "Email is required";
+  const passwordError = `Password must have min ${passwordPower} characters or less`;
+  const passwordRequired = "Password is required";
+  const confirmPasswordError = "Password must match";
+  const confirmPasswordRequired = "Password must match";
+  const checkInfoError = "Please accept the terms of service";
 
   //FORM_TYPE
   type FormType = {
@@ -28,7 +44,6 @@ export const Form = () => {
   };
 
   //VALIDATION_FORM
-  const passwordRules: any = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}$/;
   const formik = useFormik<FormType>({
     initialValues: {
       name: "",
@@ -40,29 +55,15 @@ export const Form = () => {
     },
 
     validationSchema: Yup.object({
-      name: Yup.string()
-        .max(20, "Name must be 20 characters or less")
-        .required("Name is required"),
-      email: Yup.string()
-        .email("Invalid email adres")
-        .required("Email is required"),
+      name: Yup.string().max(passwordLength, nameError).required(nameRequired),
+      email: Yup.string().email(emailError).required(emailRequired),
       password: Yup.string()
-        .min(
-          8,
-          "Password must have min 8 characters or less, one number, one capital letter"
-        )
-        .matches(
-          passwordRules,
-          "Password must have min 8 characters or less, one number, one capital letter"
-        )
-        .required("Password is required"),
+        .min(passwordPower, passwordError)
+        .required(passwordRequired),
       confirmPassword: Yup.string()
-        .oneOf([Yup.ref("password"), "Password confirm"], "Password must match")
-        .required("Password must match"),
-      checkInfo: Yup.boolean().oneOf(
-        [true],
-        "Please accept the terms of service"
-      ),
+        .oneOf([Yup.ref("password"), "Password confirm"], confirmPasswordError)
+        .required(confirmPasswordRequired),
+      checkInfo: Yup.boolean().oneOf([true], checkInfoError),
     }),
     onSubmit: (values) => {
       if (
@@ -76,17 +77,31 @@ export const Form = () => {
     },
   });
 
-  if (false) {
+  //CLEAR_FORM_INPUT
+  const formSubmit = () => {
+    formik.values.name = "";
+    formik.values.email = "";
+    formik.values.checkInfo = false;
+    formik.values.password = "";
+    formik.values.confirmPassword = "";
+    setForm(false);
+  };
+
+  //FORM
+  if (form) {
     return (
       <Section>
         <FormStyle onSubmit={formik.handleSubmit}>
+          <FormSliderContainer>
+            <FormSlider />
+          </FormSliderContainer>
           <FormRegistration>
             <h1>Registration successful</h1>
             <SubmitText>
               Thank you, <span>{formik.values.name}</span> for registering. We
               sand you email to you adress <span>{formik.values.email}</span>
             </SubmitText>
-            <Button onClick={() => setForm(false)}>Registration</Button>
+            <Button onClick={() => formSubmit()}>Registration</Button>
           </FormRegistration>
         </FormStyle>
       </Section>
@@ -95,7 +110,10 @@ export const Form = () => {
     return (
       <Section>
         <FormStyle onSubmit={formik.handleSubmit}>
-          <FormRegistration>
+          <FormSliderContainer>
+            <FormSlider />
+          </FormSliderContainer>
+          <FormRegistration id="formRegistration">
             <h1>Registration</h1>
             <InputContainer
               error={formik.touched.name && formik.errors.name ? "error" : ""}
@@ -151,15 +169,30 @@ export const Form = () => {
                 {formik.touched.password && formik.errors.password
                   ? formik.errors.password
                   : "Password"}
+                {/* PASSWORD_BAR */}
+                {formik.values.password && (
+                  <PasswordBar
+                    passwordLength={formik.values.password.length}
+                    passwordPower={passwordPower}
+                  />
+                )}
               </label>
               <input
-                type="password"
+                type={passwordType ? "password" : "text"}
                 name="password"
                 placeholder="Select your password"
                 value={formik.values.password}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
               ></input>
+
+              {passwordType ? (
+                formik.values.password && (
+                  <BiShow onClick={() => setPasswordType(!passwordType)} />
+                )
+              ) : (
+                <BiHide onClick={() => setPasswordType(!passwordType)} />
+              )}
             </InputContainer>
             <InputContainer
               error={
@@ -174,7 +207,7 @@ export const Form = () => {
                   : "Confirm password"}
               </label>
               <input
-                type="password"
+                type={passwordType ? "password" : "text"}
                 name="confirmPassword"
                 placeholder="Repeat your password"
                 value={formik.values.confirmPassword}
@@ -214,14 +247,8 @@ export const Form = () => {
                 </label>
               </CheckBoxContainer>
             </Container>
-
             <Button>Submit</Button>
-
-            {/* toto */}
           </FormRegistration>
-          <FormSliderContainer>
-            <FormSlider />
-          </FormSliderContainer>
         </FormStyle>
       </Section>
     );
