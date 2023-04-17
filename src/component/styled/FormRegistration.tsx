@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
 export const FormRegistration = styled.div`
+  min-height: 800px;
+
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -17,6 +19,8 @@ export const FormRegistration = styled.div`
     #003346,
     #051937
   );
+  border-radius: 0 10px 10px 0;
+
   h1 {
     display: block;
     text-align: center;
