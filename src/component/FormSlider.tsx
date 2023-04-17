@@ -4,20 +4,22 @@ import { SliderContainer } from "./styled/SliderContainer";
 import { OneSlider } from "./styled/OneSlider";
 import { OneSliderContainer } from "./styled/OneSliderContainer";
 import { Dot } from "./Dot";
+import { ButtonSlider } from "./styled/ButtonSlider";
+import { ButtonSliderContainer } from "./styled/ButtonSliderContainer";
 
 export const FormSlider = () => {
   const [slideIndex, setSlideIndex] = useState(0);
 
-  // useEffect(() => {
-  //   const time = 3000;
-  //   const timer = setTimeout(() => {
-  //     slideIndex >= Data.length - 1
-  //       ? setSlideIndex(0)
-  //       : setSlideIndex(slideIndex + 1);
-  //   }, time);
+  useEffect(() => {
+    const time = 3000;
+    const timer = setTimeout(() => {
+      slideIndex >= Data.length - 1
+        ? setSlideIndex(0)
+        : setSlideIndex(slideIndex + 1);
+    }, time);
 
-  //   return () => clearInterval(timer);
-  // }, [slideIndex]);
+    return () => clearInterval(timer);
+  }, [slideIndex]);
 
   return (
     <SliderContainer>
@@ -36,6 +38,12 @@ export const FormSlider = () => {
           </OneSliderContainer>
         );
       })}
+      <ButtonSliderContainer>
+        <ButtonSlider>
+          {" "}
+          <a href="#formRegistration">registration </a>
+        </ButtonSlider>
+      </ButtonSliderContainer>
       <Dot
         dotCount={Data.length}
         slideIndex={slideIndex}
